@@ -6,7 +6,7 @@
 // @supportURL      https://github.com/madkarmaa/audio-to-voice-message
 // @updateURL       https://raw.githubusercontent.com/madkarmaa/audio-to-voice-message/main/script.user.js
 // @downloadURL     https://raw.githubusercontent.com/madkarmaa/audio-to-voice-message/main/script.user.js
-// @version         1.2.0
+// @version         1.3.0
 // @description     Send audio files as voice messages on Discord without any client modification
 // @author          mk_
 // @match           *://discord.com/*
