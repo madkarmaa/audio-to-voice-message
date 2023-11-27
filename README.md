@@ -15,6 +15,13 @@ Install any userscript manager extension in your browser, such as **Tampermonkey
 
 ## ❓ Info
 
-**Right click** the _Upload file_ button, select an audio file, and wait for it to be turned into a voice message.
+1. **Right click** the _**Upload file**_ button
+   ![screenshot-1](https://raw.githubusercontent.com/madkarmaa/audio-to-voice-message/main/images/screenshot-1.png)
+
+2. Select an audio file
+   ![screenshot-2](https://raw.githubusercontent.com/madkarmaa/audio-to-voice-message/main/images/screenshot-2.png)
+
+3. Wait for it to be turned into a voice message
+   ![screenshot-3](https://raw.githubusercontent.com/madkarmaa/audio-to-voice-message/main/images/screenshot-3.png)
 
 All the code is copied from snippets in the **Discord Previews**'s Discord server, **[Join now](https://discord.com/invite/discord-603970300668805120)**!
