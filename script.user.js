@@ -51,6 +51,10 @@
                 resolve(fileInput.files[0]);
                 fileInput.remove();
             });
+            fileInput.addEventListener('cancel', () => {
+                resolve(null);
+                fileInput.remove();
+            });
         });
     }
 
@@ -103,22 +107,25 @@
 
     async function start() {
         let channelID = findByProps('getCurrentlySelectedChannelId').getCurrentlySelectedChannelId(),
-            audioFile = await openFile(),
-            response = await findByProps('getAPIBaseURL')
-                .post({
-                    url: `/channels/${channelID}/attachments`,
-                    body: {
-                        files: [
-                            {
-                                filename: 'voice-message.ogg',
-                                file_size: audioFile.size,
-                                id: `${Math.floor(1000 * Math.random())}`,
-                                is_clip: false,
-                            },
-                        ],
-                    },
-                })
-                .catch((err) => err);
+            audioFile = await openFile();
+
+        if (!audioFile) return;
+
+        let response = await findByProps('getAPIBaseURL')
+            .post({
+                url: `/channels/${channelID}/attachments`,
+                body: {
+                    files: [
+                        {
+                            filename: 'voice-message.ogg',
+                            file_size: audioFile.size,
+                            id: `${Math.floor(1000 * Math.random())}`,
+                            is_clip: false,
+                        },
+                    ],
+                },
+            })
+            .catch((err) => err);
 
         if (!response.ok) return console.error(`%c[Error] %c${response.text}`, 'color: red', '');
         response = JSON.parse(response.text);
@@ -149,15 +156,20 @@
         if (!audioMessageResponse.ok)
             return console.error(`%c[Error] %c${audioMessageResponse.text}`, 'color: red', '');
         console.log('%cSuccess', 'color: green');
+        return true;
     }
 
     /**
-     * All the functions above can be found at Discord Previews's Discord server, specifically here:
+     * All the above functions can be found at Discord Previews's Discord server, specifically here:
      * https://discord.com/channels/603970300668805120/1148135971418804315/1148136792579645506
      * I just de-obfuscated them the best I could :D
      */
 
     GM_addStyle(`
+form div[class*="channelTextArea"] div[class*="attachWrapper"] button[class*="attachButton"] * {
+    transition: all .3s ease-in-out;
+}
+
 form div[class*="channelTextArea"] div[class*="attachWrapper"] button[class*="attachButton"] > div {
     border: 2px solid transparent;
     border-radius: 50%;
@@ -165,6 +177,18 @@ form div[class*="channelTextArea"] div[class*="attachWrapper"] button[class*="at
 
 form div[class*="channelTextArea"] div[class*="attachWrapper"] button[class*="attachButton"]:hover > div {
     border-color: #5865F2;
+}
+
+form div[class*="channelTextArea"] div[class*="attachWrapper"] button[class*="attachButton"].error > div {
+    border-color: #ED4245;
+}
+
+form div[class*="channelTextArea"] div[class*="attachWrapper"] button[class*="attachButton"].loading > div {
+    border-color: #FEE75C;
+}
+
+form div[class*="channelTextArea"] div[class*="attachWrapper"] button[class*="attachButton"].success > div {
+    border-color: #57F287;
 }
 `);
 
@@ -188,9 +212,19 @@ form div[class*="channelTextArea"] div[class*="attachWrapper"] button[class*="at
         'form div[class*="channelTextArea"] div[class*="attachWrapper"] button[class*="attachButton"]'
     );
     uploadButton.title = 'Right click to upload an audio file as voice message!';
-    uploadButton.addEventListener('contextmenu', async (event) => {
-        event.preventDefault();
-        await start();
+    uploadButton.addEventListener('contextmenu', async (e) => {
+        e.preventDefault();
+        uploadButton.classList.add('loading');
+
+        if (await start()) uploadButton.classList.add('success');
+        else uploadButton.classList.add('error');
+
+        uploadButton.classList.remove('loading');
+        setTimeout(() => {
+            uploadButton.classList.remove('success');
+            uploadButton.classList.remove('error');
+        }, 1000);
+
         return false;
     });
 })();
