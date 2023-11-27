@@ -1,19 +1,16 @@
 // ==UserScript==
 // @name            Send audio files as voice messages
-// @icon            https://raw.githubusercontent.com/madkarmaa/youtube-downloader/main/images/icon.png
+// @icon            https://raw.githubusercontent.com/madkarmaa/audio-to-voice-message/main/images/icon.png
 // @namespace       banana
-// @source
-// @supportURL
-// @updateURL
-// @downloadURL
-// @version         1.0.0
+// @source          https://github.com/madkarmaa/audio-to-voice-message
+// @supportURL      https://github.com/madkarmaa/audio-to-voice-message
+// @updateURL       https://raw.githubusercontent.com/madkarmaa/audio-to-voice-message/main/script.user.js
+// @downloadURL     https://raw.githubusercontent.com/madkarmaa/audio-to-voice-message/main/script.user.js
+// @version         1.0.5
 // @description     Send audio files as voice messages on Discord without any client modification
 // @author          mk_
 // @match           *://discord.com/*
-// @connect         raw.githubusercontent.com
 // @grant           GM_addStyle
-// @grant           GM.xmlHttpRequest
-// @grant           GM.xmlhttpRequest
 // @run-at          document-end
 // ==/UserScript==
 
