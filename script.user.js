@@ -6,7 +6,7 @@
 // @supportURL      https://github.com/madkarmaa/audio-to-voice-message
 // @updateURL       https://raw.githubusercontent.com/madkarmaa/audio-to-voice-message/main/script.user.js
 // @downloadURL     https://raw.githubusercontent.com/madkarmaa/audio-to-voice-message/main/script.user.js
-// @version         1.1.0
+// @version         1.2.0
 // @description     Send audio files as voice messages on Discord without any client modification
 // @author          mk_
 // @match           *://discord.com/*
@@ -156,6 +156,17 @@
      * https://discord.com/channels/603970300668805120/1148135971418804315/1148136792579645506
      * I just de-obfuscated them the best I could :D
      */
+
+    GM_addStyle(`
+form div[class*="channelTextArea"] div[class*="attachWrapper"] button[class*="attachButton"] > div {
+    border: 2px solid transparent;
+    border-radius: 50%;
+}
+
+form div[class*="channelTextArea"] div[class*="attachWrapper"] button[class*="attachButton"]:hover > div {
+    border-color: #5865F2;
+}
+`);
 
     // https://stackoverflow.com/a/61511955
     function waitForElement(selector) {
