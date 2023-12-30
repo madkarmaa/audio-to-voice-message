@@ -6,7 +6,7 @@
 // @supportURL      https://github.com/madkarmaa/audio-to-voice-message
 // @updateURL       https://raw.githubusercontent.com/madkarmaa/audio-to-voice-message/main/script.user.js
 // @downloadURL     https://raw.githubusercontent.com/madkarmaa/audio-to-voice-message/main/script.user.js
-// @version         1.3.0
+// @version         1.3.1
 // @description     Send audio files as voice messages on Discord without any client modification
 // @author          mk_
 // @match           *://discord.com/*
@@ -21,21 +21,22 @@
      * findByProps on Discord Previews
      * https://discord.com/channels/603970300668805120/1085682686607249478/1085682686607249478
      */
-    let _modules = webpackChunkdiscord_app.push([[Symbol()], {}, ({ c: module }) => Object.values(module)]);
+    let _mods;
+    webpackChunkdiscord_app.push([[Symbol()], {}, (r) => (_mods = r.c)]);
     webpackChunkdiscord_app.pop();
 
-    function findByProps(...props) {
-        for (let module of _modules) {
+    let findByProps = (...props) => {
+        for (let m of Object.values(_mods)) {
             try {
-                if (!module.exports || module.exports === window) continue;
-                if (props.every((prop) => module.exports?.[prop])) return module.exports;
+                if (!m.exports || m.exports === window) continue;
+                if (props.every((x) => m.exports?.[x])) return m.exports;
 
-                for (let _export in module.exports) {
-                    if (props.every((prop) => module.exports?.[_export]?.[prop])) return module.exports[_export];
+                for (let ex in m.exports) {
+                    if (props.every((x) => m.exports?.[ex]?.[x])) return m.exports[ex];
                 }
             } catch {}
         }
-    }
+    };
 
     // open an audio file input dialog
     function openFile() {
